@@ -51,7 +51,7 @@ public class DoorScript : MonoBehaviour {
 	[Serializable]
 	public class DoorTexts
 	{
-		public bool enabled = false;
+		public bool enabled = true;
 		public string openingText = "Press [BUTTON] to open";
 		public string closingText = "Press [BUTTON] to close";
 		public string lockText = "You need a key!";
