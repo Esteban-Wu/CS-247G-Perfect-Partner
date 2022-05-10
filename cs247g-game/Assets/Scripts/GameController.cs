@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
     // This is a coroutine for Scene 1.
     IEnumerator Scene1() 
     {
-        yield return PanMemoryPhotos();
+        //yield return PanMemoryPhotos();
         yield return WakeUpToPhoneBuzz();
         yield return UnlockPhone();
         yield return DiscoverInfidelity();
@@ -147,6 +147,7 @@ public class GameController : MonoBehaviour
     IEnumerator UnlockPhone() {
         string answer = "730";
         string guess = "";
+        
 
         // Set up buttons
         Button[] numberButtons = {null, null, null, null, null, null, null, null, null, null};
@@ -155,13 +156,16 @@ public class GameController : MonoBehaviour
             numberButtons[i] = b;
         }
         Button cancelButton = lockScreen.transform.Find("CancelButton").GetComponent<Button>();
+        Button backButton = lockScreen.transform.Find("Back Button").GetComponent<Button>();
         
         // Detect button clicks
         yield return ShowDots(guess);
         do {
             if(Input.GetMouseButtonDown(0)) {
+                GameObject curr = EventSystem.current.currentSelectedGameObject;
+
+                // Number buttons
                 for (int i = 0; i < 10; i++) {
-                    GameObject curr = EventSystem.current.currentSelectedGameObject;
                     if (curr != null && numberButtons[i].name.Equals(curr.name)) {
                         guess += "" + i;
                         yield return ShowDots(guess);
@@ -174,6 +178,11 @@ public class GameController : MonoBehaviour
                             yield return ShowDots(guess);
                         }
                     }
+                }
+
+                // Back button
+                if (curr != null && curr.name.Equals("Back Button")) {
+                    Debug.Log("back clicked");
                 }
             }
             yield return null;
