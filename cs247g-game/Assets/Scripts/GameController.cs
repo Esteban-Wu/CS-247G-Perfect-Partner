@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
         // Debug.Log("Switch to first-person controller");
         scriptedCamera.gameObject.SetActive(false);
         fpsController.gameObject.SetActive(true);
-        // yield return null;
+        yield return null;
     }
 
     // Method to through the 8 photos of memories.
