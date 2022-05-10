@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
@@ -12,9 +13,16 @@ public class GameController : MonoBehaviour
     public Canvas canvas;
     public GameObject upperEyelid;
     public GameObject lowerEyelid;
+    public GameObject phone;
+    public GameObject phoneInterface;
+    public GameObject husband;
 
     private Image blackOverlay;
     private TextMeshProUGUI bottomText;
+    private TextMeshProUGUI topText;
+    private Image screen1;
+    private Image screen2;
+    private Image lockScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +30,7 @@ public class GameController : MonoBehaviour
         // Initialize private game objects
         blackOverlay = canvas.transform.Find("Black Overlay").GetComponent<Image>();
         bottomText = canvas.transform.Find("Bottom Text").GetComponent<TextMeshProUGUI>();
+        topText = canvas.transform.Find("Top Text").GetComponent<TextMeshProUGUI>();
 
         // Start Scene 1
         StartCoroutine(Scene1());
@@ -32,10 +41,12 @@ public class GameController : MonoBehaviour
     {
         yield return PanMemoryPhotos();
         yield return WakeUpToPhoneBuzz();
+        yield return UnlockPhone();
+        yield return DiscoverInfidelity();
 
         // Debug.Log("Switch to first-person controller");
-        scriptedCamera.gameObject.SetActive(false);
-        fpsController.gameObject.SetActive(true);
+        // scriptedCamera.gameObject.SetActive(false);
+        // fpsController.gameObject.SetActive(true);
         yield return null;
     }
 
@@ -48,6 +59,9 @@ public class GameController : MonoBehaviour
         canvas.gameObject.SetActive(true);
         blackOverlay.gameObject.SetActive(false);
         bottomText.gameObject.SetActive(false);
+        topText.gameObject.SetActive(false);
+        phoneInterface.gameObject.SetActive(false);
+        husband.gameObject.SetActive(false);
         upperEyelid.gameObject.SetActive(false);
         upperEyelid.gameObject.SetActive(false);
         
@@ -83,6 +97,7 @@ public class GameController : MonoBehaviour
         scriptedCamera.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
         upperEyelid.gameObject.SetActive(true);
         lowerEyelid.gameObject.SetActive(true);
+        blackOverlay.gameObject.SetActive(false);
 
         // Wait 3 seconds, then blink 3 times (opening)
         yield return Wait(3);
@@ -98,7 +113,141 @@ public class GameController : MonoBehaviour
         yield return Wait(2);
         yield return ShowText("Where is he...?");
 
-        // TODO (Katherine): phone buzz, click phone, unlock phone, faint, end scene
+        // Phone glow
+        phone.GetComponent<Outline>().OutlineWidth = 2; 
+        yield return Wait(0.3f);
+        phone.GetComponent<Outline>().OutlineWidth = 0;
+        yield return Wait(0.3f);
+        phone.GetComponent<Outline>().OutlineWidth = 2;
+        yield return Wait(0.3f);
+        phone.GetComponent<Outline>().OutlineWidth = 0;
+        yield return Wait(0.3f);
+        phone.GetComponent<Outline>().OutlineWidth = 2;
+        yield return Wait(0.3f);
+        // TODO: play ~ding~ audio
+
+        // Show phone interface once the phone is clicked
+        yield return WaitForClick("phone");
+        phoneInterface.SetActive(true);
+        screen1 = phoneInterface.transform.Find("Screen 1").GetComponent<Image>();
+        screen2 = phoneInterface.transform.Find("Screen 2").GetComponent<Image>();
+        lockScreen = phoneInterface.transform.Find("Lock Screen").GetComponent<Image>();
+        screen1.gameObject.SetActive(true);
+        screen2.gameObject.SetActive(false);
+        lockScreen.gameObject.SetActive(false);
+        yield return Wait(1.5f);
+        yield return ShowText("What the f-");
+
+        // Transition to lock screen
+        screen1.gameObject.SetActive(false);
+        lockScreen.gameObject.SetActive(true);
+    }
+
+    // The unlock phone puzzle.
+    IEnumerator UnlockPhone() {
+        string answer = "730";
+        string guess = "";
+
+        // Set up buttons
+        Button[] numberButtons = {null, null, null, null, null, null, null, null, null, null};
+        for (int i = 0; i < 10; i++) {
+            Button b = lockScreen.transform.Find(i + "Button").GetComponent<Button>();
+            numberButtons[i] = b;
+        }
+        Button cancelButton = lockScreen.transform.Find("CancelButton").GetComponent<Button>();
+        
+        // Detect button clicks
+        yield return ShowDots(guess);
+        do {
+            if(Input.GetMouseButtonDown(0)) {
+                for (int i = 0; i < 10; i++) {
+                    GameObject curr = EventSystem.current.currentSelectedGameObject;
+                    if (curr != null && numberButtons[i].name.Equals(curr.name)) {
+                        guess += "" + i;
+                        yield return ShowDots(guess);
+                        if (guess.Equals(answer)) {
+                            yield return ShowTopText("Correct passcode. Phone unlocked.", 1);
+                            break;
+                        } else if (guess.Length == 3) {
+                            yield return ShowTopText("Incorrect passcode. Try again.", 1);
+                            guess = "";
+                            yield return ShowDots(guess);
+                        }
+                    }
+                }
+            }
+            yield return null;
+        } while (!guess.Equals(answer));
+    }
+
+    // Read cheating messages and faint.
+    IEnumerator DiscoverInfidelity() {
+        // Show cheating messages and wait for player to scroll to the bottom
+        lockScreen.gameObject.SetActive(false);
+        screen2.gameObject.SetActive(true);
+        yield return WaitForScroll();
+        yield return ShowText("Oh my goodness...");
+        phoneInterface.gameObject.SetActive(false);
+
+        // Move camera to edge of bed
+        scriptedCamera.transform.position = new Vector3(-6.6f, 3.9f, 2.1f);
+        scriptedCamera.transform.rotation = Quaternion.Euler(30f, -15f, 0f);
+
+        // Drop phone
+        phone.GetComponent<Outline>().OutlineWidth = 0; 
+        phone.transform.position = new Vector3(-6.517f, 3.692f, 2.509f);
+        phone.transform.rotation = Quaternion.Euler(-148.346f, 33.063f, -90f);
+        phone.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 100), ForceMode.Force);
+        yield return Wait(2);
+
+        // Husband appears and walks towards camera
+        husband.gameObject.SetActive(true);
+        Vector3 start = husband.transform.position;
+        Vector3 end = new Vector3(-6.25f, 2.9f, 2.7f);
+        yield return MoveObjectToPosition(husband, start, end, 1);
+        topText.gameObject.SetActive(true);
+        topText.text = "          \"Hey honey, what's wrong?\"";
+        yield return Wait(2);
+
+        // Screen fizzles while fading to black
+        StartCoroutine(Fade(true, 0.3f));
+        int shakeTimes = 10;
+        float shakeAmount = 0.03f;
+        Vector3 originalPos = scriptedCamera.transform.localPosition;
+        while (shakeTimes > 0) {
+			scriptedCamera.transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+			shakeTimes -= 1;
+            yield return Wait(0.1f);
+		}
+        scriptedCamera.transform.localPosition = originalPos;
+        yield return Wait(3);
+
+        // Hide husband text, transition to next scene
+        topText.gameObject.SetActive(false);
+        // TODO: transition to scene 2
+    }
+
+    // Show dots to indicate length of current guess in the unlock phone puzzle.
+    IEnumerator ShowDots(string guess) {
+        Image dot1 = lockScreen.transform.Find("Dot1").GetComponent<Image>();
+        Image dot2 = lockScreen.transform.Find("Dot2").GetComponent<Image>();
+        Image dot3 = lockScreen.transform.Find("Dot3").GetComponent<Image>();
+        dot1.color = new Color(255f, 255f, 255f, 0f);
+        dot2.color = new Color(255f, 255f, 255f, 0f);
+        dot3.color = new Color(255f, 255f, 255f, 0f);
+        if (guess.Length >= 1) dot1.color = new Color(255f, 255f, 255f, 255f);
+        if (guess.Length >= 2) dot2.color = new Color(255f, 255f, 255f, 255f);
+        if (guess.Length >= 3) dot3.color = new Color(255f, 255f, 255f, 255f);
+        yield return null;
+    }
+
+    // Wait until player finishes reading the cheating messages.
+    IEnumerator WaitForScroll() {
+        RawImage cheatingMessages = GameObject.Find("Cheating Messages").GetComponent<RawImage>();
+        RectTransform transform = cheatingMessages.GetComponent<RectTransform>();
+        while (transform.anchoredPosition.y < 750f) {
+            yield return null;
+        }
     }
 
     // Method for the eye blink effect. TODO (Katherine): modify to support blink closing.
@@ -148,6 +297,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // Method to display str as top text for x seconds.
+    IEnumerator ShowTopText(string str, float x) {
+        topText.text = str;
+        topText.gameObject.SetActive(true);
+        yield return Wait(x);
+        topText.gameObject.SetActive(false);
+    }
+
     // Method to wait for x seconds.
     IEnumerator Wait(float x)
     {
@@ -182,6 +339,20 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // Method to move an object from start to end in t seconds.
+    IEnumerator MoveObjectToPosition(GameObject obj, Vector3 start, Vector3 end, float t)
+    {
+        obj.transform.position = start;
+        Vector3 currentPos = start;
+        float ratio = 0f;
+        while (ratio < 1)
+        {
+            ratio += Time.deltaTime / t;
+            obj.transform.position = Vector3.Lerp(currentPos, end, ratio);
+            yield return null;
+        }
+    }
+
     // Method to fade to black/white.
     IEnumerator Fade(bool black, float speed)
     {
@@ -208,8 +379,6 @@ public class GameController : MonoBehaviour
                 yield return null;
             }
         }
-
-        blackOverlay.gameObject.SetActive(false);
     }
 
     // Method to show text on the canvas with a typewriter effect.
@@ -230,5 +399,23 @@ public class GameController : MonoBehaviour
             yield return null;
         }
         bottomText.gameObject.SetActive(false);
+    }
+
+
+    // Waits for an object named objectName to be clicked.
+    IEnumerator WaitForClick(string objectName)
+    {
+        while(true) {
+            if(Input.GetMouseButtonDown(0)) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);  
+                RaycastHit hit;  
+                if (Physics.Raycast(ray, out hit)) {  
+                    if (hit.transform.name.Equals(objectName)) {
+                        break;
+                    }
+                }
+            }
+            yield return null;
+        }
     }
 }
