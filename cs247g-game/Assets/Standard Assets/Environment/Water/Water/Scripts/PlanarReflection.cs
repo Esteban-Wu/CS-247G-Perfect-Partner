@@ -172,7 +172,11 @@ namespace UnityStandardAssets.Water
             Vector3 eulerA = cam.transform.eulerAngles;
 
             reflectCamera.transform.eulerAngles = new Vector3(-eulerA.x, eulerA.y, eulerA.z);
-            reflectCamera.transform.position = cam.transform.position;
+            // reflectCamera.transform.position = cam.transform.position;
+            float xPos = Mathf.Clamp(cam.transform.position.x, -float.MaxValue + 100, float.MaxValue - 100);
+            float yPos = Mathf.Clamp(cam.transform.position.y, -float.MaxValue + 100, float.MaxValue - 100);
+            float zPos = Mathf.Clamp(cam.transform.position.z, -float.MaxValue + 100, float.MaxValue - 100);
+            reflectCamera.transform.position = new Vector3(xPos, yPos, zPos);
 
             Vector3 pos = reflectiveSurface.transform.position;
             pos.y = reflectiveSurface.position.y;
@@ -193,7 +197,11 @@ namespace UnityStandardAssets.Water
             projection = CalculateObliqueMatrix(projection, clipPlane);
             reflectCamera.projectionMatrix = projection;
 
-            reflectCamera.transform.position = newpos;
+          //  reflectCamera.transform.position = newpos;
+            xPos = Mathf.Clamp(newpos.x, -float.MaxValue + 100, float.MaxValue - 100);
+            yPos = Mathf.Clamp(newpos.y, -float.MaxValue + 100, float.MaxValue - 100);
+            zPos = Mathf.Clamp(newpos.z, -float.MaxValue + 100, float.MaxValue - 100);
+            reflectCamera.transform.position = new Vector3(xPos, yPos, zPos);
             Vector3 euler = cam.transform.eulerAngles;
             reflectCamera.transform.eulerAngles = new Vector3(-euler.x, euler.y, euler.z);
 
