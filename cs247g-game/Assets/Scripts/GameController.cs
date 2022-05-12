@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public GameObject phone;
     public GameObject phoneInterface;
     public GameObject husband;
+    public GameObject pausePanel;
 
     private Image blackOverlay;
     private TextMeshProUGUI bottomText;
@@ -32,6 +33,14 @@ public class GameController : MonoBehaviour
         blackOverlay = canvas.transform.Find("Black Overlay").GetComponent<Image>();
         bottomText = canvas.transform.Find("Bottom Text").GetComponent<TextMeshProUGUI>();
         topText = canvas.transform.Find("Top Text").GetComponent<TextMeshProUGUI>();
+
+        // Button listeners
+        Button bResumeGame = pausePanel.transform.Find("ButtonResumeGame").GetComponent<Button>();
+        Button bSaveGame = pausePanel.transform.Find("ButtonSaveGame").GetComponent<Button>();
+        Button bMainMenu = pausePanel.transform.Find("ButtonMainMenu").GetComponent<Button>();
+        bResumeGame.onClick.AddListener(() => ShowPausePanel(false));
+        bSaveGame.onClick.AddListener(() => SaveGame());
+        bMainMenu.onClick.AddListener(() => MainMenu());
 
         // Start Scene 1
         StartCoroutine(Scene1());
@@ -440,6 +449,30 @@ public class GameController : MonoBehaviour
                 }
             }
             yield return null;
+        }
+    }
+
+    // Show/hide the pause panel
+    void ShowPausePanel(bool visible)
+    {
+        pausePanel.gameObject.SetActive(visible);
+    }
+
+    // Save game
+    void SaveGame() 
+    {
+        Debug.Log("Save game clicked");
+    }
+
+    // Return to main menu
+    void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            ShowPausePanel(true);
         }
     }
 }
