@@ -5,6 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -39,15 +40,25 @@ public class GameController : MonoBehaviour
     // This is a coroutine for Scene 1.
     IEnumerator Scene1() 
     {
-        //yield return PanMemoryPhotos();
+        yield return PanMemoryPhotos();
         yield return WakeUpToPhoneBuzz();
         yield return UnlockPhone();
         yield return DiscoverInfidelity();
-
-        // Debug.Log("Switch to first-person controller");
-        // scriptedCamera.gameObject.SetActive(false);
-        // fpsController.gameObject.SetActive(true);
+        
+        // Transition to scene 2
+        SceneManager.LoadScene("DayScene");
         yield return null;
+    }
+
+    // Method to enable/disable fpsController.
+    void EnableFPSController(bool state) {
+        if (state) {
+            scriptedCamera.gameObject.SetActive(false);
+            fpsController.gameObject.SetActive(true);
+        } else {
+            scriptedCamera.gameObject.SetActive(true);
+            fpsController.gameObject.SetActive(false);
+        }
     }
 
     // Method to through the 8 photos of memories.
@@ -148,7 +159,6 @@ public class GameController : MonoBehaviour
         string answer = "730";
         string guess = "";
         
-
         // Set up buttons
         Button[] numberButtons = {null, null, null, null, null, null, null, null, null, null};
         for (int i = 0; i < 10; i++) {
@@ -159,6 +169,7 @@ public class GameController : MonoBehaviour
         Button backButton = lockScreen.transform.Find("Back Button").GetComponent<Button>();
         
         // Detect button clicks
+        yield return ShowText("I saw his passcode on a sticky note... where is it?");
         yield return ShowDots(guess);
         do {
             if(Input.GetMouseButtonDown(0)) {
@@ -182,7 +193,12 @@ public class GameController : MonoBehaviour
 
                 // Back button
                 if (curr != null && curr.name.Equals("Back Button")) {
-                    Debug.Log("back clicked");
+                    phoneInterface.gameObject.SetActive(false);
+                    EnableFPSController(true);
+                    yield return WaitForClick("phone");
+                    phoneInterface.SetActive(true);
+                    EnableFPSController(false);
+                    yield return ShowText("I saw his passcode on a sticky note... where is it?");
                 }
             }
             yield return null;
@@ -233,7 +249,6 @@ public class GameController : MonoBehaviour
 
         // Hide husband text, transition to next scene
         topText.gameObject.SetActive(false);
-        // TODO: transition to scene 2
     }
 
     // Show dots to indicate length of current guess in the unlock phone puzzle.
@@ -418,7 +433,7 @@ public class GameController : MonoBehaviour
             if(Input.GetMouseButtonDown(0)) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);  
                 RaycastHit hit;  
-                if (Physics.Raycast(ray, out hit)) {  
+                if (Physics.Raycast(ray, out hit)) { 
                     if (hit.transform.name.Equals(objectName)) {
                         break;
                     }
