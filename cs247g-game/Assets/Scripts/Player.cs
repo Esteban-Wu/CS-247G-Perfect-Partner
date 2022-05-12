@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
         inRange = false;
     }
 
+    private void OnApplicationQuit()
+    {
+        inventory.Container.Clear();
+    }
+
     void Update()
     {
         var item = collision.GetComponent<Item>();

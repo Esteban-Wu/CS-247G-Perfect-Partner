@@ -8,6 +8,6 @@ public class ItemObject : ScriptableObject
     public string name;
     [TextArea(25, 20)]
     public string description;
-    public Sprite icon;
+    public GameObject icon;
     public GameObject prefab;
 }
