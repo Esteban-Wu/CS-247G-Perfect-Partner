@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Credit Card
   description: A credit card that can be used to pay for things.
-  icon: {fileID: 21300000, guid: 6fd3b05a7f0aa92458c4c00bf22677e0, type: 3}
+  icon: {fileID: 8550234736324405103, guid: 1caf8ffcefb6f974492a043f60df3dd7, type: 3}
   prefab: {fileID: 7638843692982959353, guid: a8a8c15ca1e954a43999f043166a5e71, type: 3}
