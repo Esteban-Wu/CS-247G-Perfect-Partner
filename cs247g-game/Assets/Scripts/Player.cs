@@ -7,32 +7,41 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public InventoryObject inventory;
-    bool inRange = false;
+    public SceneController sceneController;
+    private bool inRange;
     private Collider collision;
+    private Item item;
     
-    // Putting this here for now
-    public GameObject pausePanel;
     void Start()
     {
-        // Button listeners
-        Button bResumeGame = pausePanel.transform.Find("ButtonResumeGame").GetComponent<Button>();
-        Button bSaveGame = pausePanel.transform.Find("ButtonSaveGame").GetComponent<Button>();
-        Button bHint = pausePanel.transform.Find("ButtonHint").GetComponent<Button>();
-        Button bMainMenu = pausePanel.transform.Find("ButtonMainMenu").GetComponent<Button>();
-        bResumeGame.onClick.AddListener(() => ShowPausePanel(false));
-        bSaveGame.onClick.AddListener(() => SaveGame());
-        bHint.onClick.AddListener(() => Hint());
-        bMainMenu.onClick.AddListener(() => MainMenu());
+        inRange = false;
+        collision = null;
+        item = null;
     }
     
     public void OnTriggerEnter(Collider other)
     {
         collision = other;
         inRange = true;
+
+        // Highlight item
+        item = other.GetComponent<Item>();
+        if (item)
+        {
+            sceneController.HighlightObject(other.gameObject, 3);
+        }
+
     }
 
     public void OnTriggerExit(Collider other)
     {
+        // Dehighlight item
+        item = other.GetComponent<Item>();
+        if (item)
+        {
+            sceneController.DehighlightObject(other.gameObject);
+        }
+
         collision = null;
         inRange = false;
     }
@@ -44,16 +53,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Temporarily putting this over here, should move it to another script that is attached
-        // to an object that never gets disabled in the entire Day Scene.
-        // Bring up the puase menu
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log("Escape button pressed");
-            ShowPausePanel(true);
+        if (collision != null) {
+            item = collision.GetComponent<Item>();
         }
 
-
-        var item = collision.GetComponent<Item>();
+        // Collect item
         if (inRange && item && Input.GetKeyDown(KeyCode.E))
         {
             inventory.AddItem(item.item, 1);
@@ -62,27 +66,4 @@ public class Player : MonoBehaviour
             inRange = false;
         }
     }
-
-    // ---------- MOVE THESE SOMEWHERE ELSE ----------
-    // Show/hide the pause panel
-    void ShowPausePanel(bool visible)
-    {
-        pausePanel.gameObject.SetActive(visible);
-    }
-    // Save game
-    void SaveGame() 
-    {
-        Debug.Log("Save game clicked");
-    }
-    // View hint
-    void Hint()
-    {
-        Debug.Log("Hint clicked");
-    }
-    // Return to main menu
-    void MainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-    // -----------------------------------------------
 }

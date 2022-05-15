@@ -66,7 +66,18 @@ public class MainMenu : MonoBehaviour
     // Resume a saved game
     void ResumeGame() 
     {
-        Debug.Log("Resume game clicked");
+        switch (Variables.currentLevel)
+        {
+            case 1:
+                SceneManager.LoadScene("NightScene");
+                break;
+            case 2:
+                SceneManager.LoadScene("DayScene");
+                break;
+            case 3:
+                SceneManager.LoadScene("NightScene");
+                break;
+        }
     }
 
     // Show the settings panel
