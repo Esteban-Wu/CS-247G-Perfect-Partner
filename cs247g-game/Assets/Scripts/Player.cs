@@ -17,9 +17,11 @@ public class Player : MonoBehaviour
         // Button listeners
         Button bResumeGame = pausePanel.transform.Find("ButtonResumeGame").GetComponent<Button>();
         Button bSaveGame = pausePanel.transform.Find("ButtonSaveGame").GetComponent<Button>();
+        Button bHint = pausePanel.transform.Find("ButtonHint").GetComponent<Button>();
         Button bMainMenu = pausePanel.transform.Find("ButtonMainMenu").GetComponent<Button>();
         bResumeGame.onClick.AddListener(() => ShowPausePanel(false));
         bSaveGame.onClick.AddListener(() => SaveGame());
+        bHint.onClick.AddListener(() => Hint());
         bMainMenu.onClick.AddListener(() => MainMenu());
     }
     
@@ -71,6 +73,11 @@ public class Player : MonoBehaviour
     void SaveGame() 
     {
         Debug.Log("Save game clicked");
+    }
+    // View hint
+    void Hint()
+    {
+        Debug.Log("Hint clicked");
     }
     // Return to main menu
     void MainMenu()

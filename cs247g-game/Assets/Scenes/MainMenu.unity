@@ -2978,13 +2978,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You are a married woman for 30 years, alone in your room, watching TV,
-    when suddenly you hear a text message go off. Your phone died a while ago and
-    you couldn\u2019t find your charger so this catches your attention. You look
-    at the phone, and your heart drops \u2013 your husband has been cheating on you.
-    As though it were on cue, an Ad for creating the ideal partner takes over your
-    t.v screen \u2013 a fully customizable partner who helps you achieve your goals.
-    Things begin to get weird once the partner arrives\u2026"
+  m_text: You are a married woman for 30 years, alone in your room, watching TV,
+    when suddenly you hear a text message go off...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

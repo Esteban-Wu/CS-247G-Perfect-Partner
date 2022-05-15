@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 {
     public Camera scriptedCamera;
     public FirstPersonController fpsController;
-    public Canvas canvas;
+    public Canvas canvas;   
     public GameObject upperEyelid;
     public GameObject lowerEyelid;
     public GameObject phone;
@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     private Image blackOverlay;
     private TextMeshProUGUI bottomText;
     private TextMeshProUGUI topText;
+    private Image returnIcon;
     private Image screen1;
     private Image screen2;
     private Image lockScreen;
@@ -33,13 +34,16 @@ public class GameController : MonoBehaviour
         blackOverlay = canvas.transform.Find("Black Overlay").GetComponent<Image>();
         bottomText = canvas.transform.Find("Bottom Text").GetComponent<TextMeshProUGUI>();
         topText = canvas.transform.Find("Top Text").GetComponent<TextMeshProUGUI>();
+        returnIcon = canvas.transform.Find("Return Key").GetComponent<Image>();
 
         // Button listeners
         Button bResumeGame = pausePanel.transform.Find("ButtonResumeGame").GetComponent<Button>();
         Button bSaveGame = pausePanel.transform.Find("ButtonSaveGame").GetComponent<Button>();
+        Button bHint = pausePanel.transform.Find("ButtonHint").GetComponent<Button>();
         Button bMainMenu = pausePanel.transform.Find("ButtonMainMenu").GetComponent<Button>();
         bResumeGame.onClick.AddListener(() => ShowPausePanel(false));
         bSaveGame.onClick.AddListener(() => SaveGame());
+        bHint.onClick.AddListener(() => Hint());
         bMainMenu.onClick.AddListener(() => MainMenu());
 
         // Start Scene 1
@@ -80,6 +84,7 @@ public class GameController : MonoBehaviour
         blackOverlay.gameObject.SetActive(false);
         bottomText.gameObject.SetActive(false);
         topText.gameObject.SetActive(false);
+        returnIcon.gameObject.SetActive(false);
         phoneInterface.gameObject.SetActive(false);
         husband.gameObject.SetActive(false);
         upperEyelid.gameObject.SetActive(false);
@@ -91,22 +96,23 @@ public class GameController : MonoBehaviour
         // Move camera up right
         Vector3 start = scriptedCamera.transform.position;
         Vector3 end = start + new Vector3(-0.1f, 0.2f, 0f);
-        yield return MoveCameraToPosition(start, end, 3);
+        yield return MoveCameraToPosition(start, end, 3.5f);
         // Move camera right
         start = end;
         end = start + new Vector3(-0.35f, 0f, 0f);
-        yield return MoveCameraToPosition(start, end, 3);
+        yield return MoveCameraToPosition(start, end, 3.5f);
         // Move camera down right
         start = end;
         end = start + new Vector3(-0.3f, -0.4f, 0f);
-        yield return MoveCameraToPosition(start, end, 3);
+        yield return MoveCameraToPosition(start, end, 3.5f);
         // Move camera up right
         start = end;
         end = start + new Vector3(-1f, 0.08f, 0f);
-        yield return MoveCameraToPosition(start, end, 5);
-        // Wait 3 seconds, then fade to black
-        yield return Wait(2);
+        yield return MoveCameraToPosition(start, end, 6);
+        // Wait 1 seconds, then fade to black
+        yield return Wait(1);
         yield return Fade(true, 0.5f);
+        scriptedCamera.transform.Find("Point Light").GetComponent<Light>().intensity = 0;
     }
 
     // Method to wake up to the husband's phone buzzing.
@@ -178,8 +184,8 @@ public class GameController : MonoBehaviour
         Button backButton = lockScreen.transform.Find("Back Button").GetComponent<Button>();
         
         // Detect button clicks
-        yield return ShowText("I saw his passcode on a sticky note... where is it?");
         yield return ShowDots(guess);
+        yield return ShowText("I saw his passcode on a sticky note in a drawer...");
         do {
             if(Input.GetMouseButtonDown(0)) {
                 GameObject curr = EventSystem.current.currentSelectedGameObject;
@@ -202,7 +208,7 @@ public class GameController : MonoBehaviour
 
                 // Back button
                 if (curr != null && curr.name.Equals("Back Button")) {
-                    phoneInterface.gameObject.SetActive(false);
+                    phoneInterface.SetActive(false);
                     EnableFPSController(true);
                     yield return WaitForClick("phone");
                     phoneInterface.SetActive(true);
@@ -425,12 +431,14 @@ public class GameController : MonoBehaviour
             bottomText.text = currentText;
             yield return new WaitForSeconds(0.05f);
         }
+        returnIcon.gameObject.SetActive(true);
 
-        // Wait until space bar is hit
-        while(!Input.GetKeyDown(KeyCode.Space))
+        // Wait until return is hit
+        while(!Input.GetKeyDown(KeyCode.Return))
         {
             yield return null;
         }
+        returnIcon.gameObject.SetActive(false);
         bottomText.gameObject.SetActive(false);
     }
 
@@ -462,6 +470,12 @@ public class GameController : MonoBehaviour
     void SaveGame() 
     {
         Debug.Log("Save game clicked");
+    }
+
+    // View hint
+    void Hint()
+    {
+        Debug.Log("Hint clicked");
     }
 
     // Return to main menu
