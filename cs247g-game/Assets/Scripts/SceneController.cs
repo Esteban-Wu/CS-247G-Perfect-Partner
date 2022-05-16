@@ -9,9 +9,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {    
-    public Camera scriptedCamera;
-    public FirstPersonController fpsController;
-    public GameObject canvas;
+    public Camera scriptedCamera; // Animation
+    public FirstPersonController fpsController; // Player
+    public GameObject canvas; // 2D interactions (phone screen, menus)
 
     // Objects used in multiple story scenes
     private GameObject pausePanel;

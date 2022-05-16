@@ -1084,7 +1084,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &46877022
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1525,6 +1525,14 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 522095259}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
 --- !u!4 &55437630 stripped
@@ -2972,6 +2980,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11475782, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475782, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475782, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
+      propertyPath: controls.openMethod
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
 --- !u!4 &142946987 stripped
@@ -3142,6 +3162,22 @@ PrefabInstance:
     - target: {fileID: 450254, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 11434324, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11434324, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455456, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455456, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
@@ -4284,6 +4320,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11429534, guid: b764bf58dea07cf4f979ff73785488a7, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11429534, guid: b764bf58dea07cf4f979ff73785488a7, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b764bf58dea07cf4f979ff73785488a7, type: 3}
 --- !u!1001 &197988795
@@ -4863,7 +4907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &222303536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7715,6 +7759,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.000000021855694
       objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
 --- !u!4 &405396582 stripped
@@ -7814,6 +7866,14 @@ PrefabInstance:
     - target: {fileID: 405670, guid: 867af09accd1c74419963bd900ebf984, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.00000001545431
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: controls.openMethod
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 13765648, guid: 867af09accd1c74419963bd900ebf984, type: 3}
       propertyPath: m_ProbeAnchor
@@ -10260,6 +10320,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: controls.openMethod
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 13765648, guid: 867af09accd1c74419963bd900ebf984, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -10819,6 +10891,14 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 677094771}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
 --- !u!4 &524056745 stripped
@@ -12660,6 +12740,22 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11413912, guid: 0b2cd981521c4034fac46674e0fdafdc, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413912, guid: 0b2cd981521c4034fac46674e0fdafdc, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492842, guid: 0b2cd981521c4034fac46674e0fdafdc, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492842, guid: 0b2cd981521c4034fac46674e0fdafdc, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b2cd981521c4034fac46674e0fdafdc, type: 3}
 --- !u!1001 &612532002
@@ -13442,6 +13538,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11468952, guid: 19b5045b6ddbf1343a1a91156c76a30c, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11468952, guid: 19b5045b6ddbf1343a1a91156c76a30c, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b5045b6ddbf1343a1a91156c76a30c, type: 3}
 --- !u!4 &639151466 stripped
@@ -13548,6 +13652,14 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 1804515627}
+    - target: {fileID: 11483752, guid: 2c90bf975d6512945898bf7706a5ebd5, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483752, guid: 2c90bf975d6512945898bf7706a5ebd5, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 13731888, guid: 2c90bf975d6512945898bf7706a5ebd5, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -14551,7 +14663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
-  outlineColor: {r: 1, g: 0.7764706, b: 0.0627451, a: 1}
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 0
   precomputeOutline: 0
   bakeKeys: []
@@ -16039,6 +16151,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11413378, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
+      propertyPath: keySystem.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413378, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413378, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
+      propertyPath: controls.openMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 13716958, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -17210,6 +17334,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11468952, guid: 19b5045b6ddbf1343a1a91156c76a30c, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11468952, guid: 19b5045b6ddbf1343a1a91156c76a30c, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b5045b6ddbf1343a1a91156c76a30c, type: 3}
 --- !u!1001 &831936759
@@ -17652,6 +17784,18 @@ PrefabInstance:
     - target: {fileID: 476780, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413378, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
+      propertyPath: keySystem.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413378, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413378, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
+      propertyPath: controls.openMethod
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 13716958, guid: a519d040a26ad394b8f43622d2216bda, type: 3}
       propertyPath: m_ProbeAnchor
@@ -23117,6 +23261,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.00000001545431
       objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: keySystem.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: controls.openMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 13765648, guid: 867af09accd1c74419963bd900ebf984, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -23570,7 +23726,7 @@ RectTransform:
   m_GameObject: {fileID: 1138855897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.37507, y: 0.077557, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1341981081}
@@ -23578,8 +23734,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90.3, y: -15}
-  m_SizeDelta: {x: 458, y: 257}
+  m_AnchoredPosition: {x: 400, y: -50}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138855899
 MonoBehaviour:
@@ -23594,11 +23750,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: f1906416bb965f045b5880ecb9213741, type: 2}
-  X_START: -200
+  X_START: -350
   Y_START: 0
-  X_SPACE_BETWEEN_ITEM: 50
-  NUMBER_OF_COLUMNS: 10
-  Y_SPACE_BETWEEN_ITEM: 35
+  X_SPACE_BETWEEN_ITEM: 100
+  NUMBER_OF_COLUMNS: 6
+  Y_SPACE_BETWEEN_ITEM: 0
 --- !u!114 &1138855900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24326,7 +24482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
-  outlineColor: {r: 1, g: 0.7735036, b: 0.06132078, a: 1}
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 0
   precomputeOutline: 0
   bakeKeys: []
@@ -29202,6 +29358,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 13765648, guid: 867af09accd1c74419963bd900ebf984, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -29672,6 +29836,14 @@ PrefabInstance:
     - target: {fileID: 485878, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
@@ -31998,6 +32170,22 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 934194369}
+    - target: {fileID: 11434324, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11434324, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455456, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455456, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57f02baa05de7e24abbd60f8d7a008c9, type: 3}
 --- !u!1001 &1466776254
@@ -33002,6 +33190,14 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 956005757}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
 --- !u!4 &1520745607 stripped
@@ -33203,6 +33399,14 @@ PrefabInstance:
     - target: {fileID: 485878, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
@@ -42127,6 +42331,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11475782, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475782, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 13742392, guid: f96ea7449a324c74c9e0e51718d434e2, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -43093,6 +43305,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.000000008363813
       objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: keySystem.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11417404, guid: 867af09accd1c74419963bd900ebf984, type: 3}
+      propertyPath: controls.openMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 13765648, guid: 867af09accd1c74419963bd900ebf984, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
@@ -43170,6 +43394,14 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 1824757322}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
 --- !u!4 &1966168333 stripped
@@ -44333,6 +44565,14 @@ PrefabInstance:
     - target: {fileID: 485878, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: keySystem.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403296, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}
+      propertyPath: doorTexts.lockText
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7fc75295a51f94c9774c45a3d025a8, type: 3}

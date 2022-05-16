@@ -30,7 +30,7 @@ public class Scene2 : MonoBehaviour
         fpsController.gameObject.SetActive(true);
         canvas.gameObject.SetActive(true);
 
-        // Start Scene 1
+        // Start Scene 2
         StartCoroutine(RunScene());
     }
 

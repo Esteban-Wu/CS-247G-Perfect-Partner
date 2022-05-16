@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         item = other.GetComponent<Item>();
         if (item)
         {
-            sceneController.HighlightObject(other.gameObject, 3);
+            sceneController.HighlightObject(other.gameObject, 8);
         }
 
     }
