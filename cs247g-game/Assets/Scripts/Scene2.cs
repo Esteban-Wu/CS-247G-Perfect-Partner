@@ -17,6 +17,10 @@ public class Scene2 : MonoBehaviour
     public GameObject sceneControllerObject;
     private SceneController sceneController;
 
+    // Scene 2 objects
+    public GameObject upperEyelid;
+    public GameObject lowerEyelid;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,20 +28,17 @@ public class Scene2 : MonoBehaviour
 
         // Initialize private game objects
         sceneController = sceneControllerObject.GetComponent<SceneController>();
-        
+
         // Initialize state of passed-in objects
-        scriptedCamera.gameObject.SetActive(false);
-        fpsController.gameObject.SetActive(true);
-        canvas.gameObject.SetActive(true);
+        scriptedCamera.gameObject.SetActive(true);
+        fpsController.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);
 
         // Start Scene 2
         StartCoroutine(RunScene());
     }
 
     IEnumerator RunScene() {
-        // TODO: put the main code of scene 2 here
-        
-
         // To wait for x seconds: sceneController.Wait(x);
         // To show bottom text: sceneController.ShowText(str, speed);
         // To move objects: 
@@ -45,16 +46,97 @@ public class Scene2 : MonoBehaviour
         //     2) sceneController.MoveObjectOverTime(obj, start, end, duration);
         // Etc. Refer to SceneController.cs for more useful methods :D
 
-
+        yield return WakeUp();
         // Transition to scene 3 by calling: 
         //     1) Variables.currentLevel = 3;
         //     2) SceneManager.LoadScene("NightScene");
         yield return null;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Player wakes up in the bedroom. Code adapted from Scene 1 WakeUpToPhoneBuzz()
+    IEnumerator WakeUp()
     {
-        
+        // Move camera to bed, eyes closed
+        sceneController.MoveObjectToPosition(scriptedCamera.gameObject, new Vector3(-6.6f, 3.6f, 1.5f));
+        sceneController.RotateObjectToAngle(scriptedCamera.gameObject, Quaternion.Euler(0f, 90f, 0f));
+
+        // Prepare for blink
+        upperEyelid.gameObject.SetActive(true);
+        lowerEyelid.gameObject.SetActive(true);
+        // sceneController.HideBlackOverlay();
+
+        // Wait 1 second, then blink 3 times
+        yield return sceneController.Wait(1);
+        yield return Blink(3);
+        yield return sceneController.Wait(1);
+
+        // Check for husband
+        Quaternion start = scriptedCamera.transform.rotation;
+        Quaternion end = Quaternion.Euler(10, 20, 0);
+        yield return sceneController.RotateObjectOverTime(scriptedCamera.gameObject, start, end, 3);
+        yield return sceneController.Wait(1);
+        end = start;
+        start = scriptedCamera.transform.rotation;
+        yield return sceneController.RotateObjectOverTime(scriptedCamera.gameObject, start, end, 3);
+        yield return sceneController.Wait(1);
+
+        // Return to FPS
+        upperEyelid.gameObject.SetActive(false);
+        lowerEyelid.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(true);
+        sceneController.EnableFPSController(true);
+        yield return null;
+    }
+
+    // Eye blink effect
+    // https://github.com/tetreum/eyeblink/blob/master/EyeBlink.cs
+    IEnumerator Blink(int n)
+    {
+        Vector3 originalUpperEyelidPosition = upperEyelid.transform.position;
+        Vector3 originalLowerEyelidPosition = lowerEyelid.transform.position;
+        Vector3 endUpper, endLower;
+        int currentBlink = 1;
+        while (currentBlink <= n)
+        {
+            // Determine end position of the eyelids
+            endUpper = originalUpperEyelidPosition;
+            endLower = originalLowerEyelidPosition;
+            endUpper.y += (0.1f * currentBlink);
+            endLower.y -= (0.1f * currentBlink);
+
+            // Open eyelids
+            yield return moveEyelids(endUpper, endLower, true, 0.70f);
+
+            // Close eyelids
+            if (currentBlink != n)
+            {
+                yield return moveEyelids(originalUpperEyelidPosition, originalLowerEyelidPosition, false, 0.70f);
+            }
+            currentBlink++;
+        }
+        upperEyelid.gameObject.SetActive(false);
+        lowerEyelid.gameObject.SetActive(false);
+
+        // Helper function to move eyelids
+        IEnumerator moveEyelids(Vector3 upper, Vector3 lower, bool opening, float speed)
+        {
+            float elapsedTime = 0;
+            while (elapsedTime < speed)
+            {
+                float duration = (elapsedTime / speed);
+                if (opening)
+                {
+                    upperEyelid.transform.position = Vector3.Lerp(originalUpperEyelidPosition, upper, duration);
+                    lowerEyelid.transform.position = Vector3.Lerp(originalLowerEyelidPosition, lower, duration);
+                }
+                else
+                {
+                    upperEyelid.transform.position = Vector3.Lerp(endUpper, upper, duration);
+                    lowerEyelid.transform.position = Vector3.Lerp(endLower, lower, duration);
+                }
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+        }
     }
 }
