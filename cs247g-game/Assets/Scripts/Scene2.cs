@@ -18,9 +18,13 @@ public class Scene2 : MonoBehaviour
     private SceneController sceneController;
 
     // Scene 2 objects
+    public InventoryObject inventory;
     public GameObject upperEyelid;
     public GameObject lowerEyelid;
-    private GameObject inventory;
+    public GameObject blackOverlay;
+    private GameObject inventoryScreen;
+    private GameObject adScreen;
+    // private bool adSolved;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +33,16 @@ public class Scene2 : MonoBehaviour
 
         // Initialize private game objects
         sceneController = sceneControllerObject.GetComponent<SceneController>();
-        inventory = canvas.transform.Find("Inventory Screen").gameObject;
+        inventoryScreen = canvas.transform.Find("Inventory Screen").gameObject;
+        blackOverlay = canvas.transform.Find("Black Overlay").gameObject;
+        adScreen = canvas.transform.Find("Ad").gameObject;
+        // adSolved = false;
 
         // Initialize state of passed-in objects
         scriptedCamera.gameObject.SetActive(true);
         fpsController.gameObject.SetActive(false);
-        inventory.gameObject.SetActive(false);
+        inventoryScreen.gameObject.SetActive(false);
+        adScreen.gameObject.SetActive(false);
 
         // Start Scene 2
         StartCoroutine(RunScene());
@@ -86,19 +94,82 @@ public class Scene2 : MonoBehaviour
         // Return to FPS
         upperEyelid.gameObject.SetActive(false);
         lowerEyelid.gameObject.SetActive(false);
-        inventory.gameObject.SetActive(true);
+        inventoryScreen.gameObject.SetActive(true);
         sceneController.EnableFPSController(true);
         yield return null;
     }
 
-    IEnumerator HandleAdInteraction()
+    public IEnumerator OpenAd()
     {
-        yield return null;
+        bool open = true;
+
+        Debug.Log("Opened ad!");
+        blackOverlay.gameObject.SetActive(true);
+        adScreen.gameObject.SetActive(true);
+        yield return sceneController.ShowText("Looks like I need to pay with a credit card...");
+        do
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Get the currently selected button
+                GameObject curr = EventSystem.current.currentSelectedGameObject;
+                // Back button, close ad
+                if (curr != null && curr.name.Equals("Back Button"))
+                {
+                    adScreen.gameObject.SetActive(false);
+                    blackOverlay.gameObject.SetActive(false);
+                    open = false;
+                    Debug.Log("Closing ad!");
+                }
+                if (curr != null && curr.name.Equals("Pay Button"))
+                {
+                    if (checkInventory("Credit Card"))
+                    {
+                        yield return sceneController.ShowTopText("Thank you for your payment! Your order will arrive soon.", 1);
+                        yield return sceneController.Wait(1);
+                        yield return SpawnRouen();
+                        break;
+                    }
+                    else
+                    {
+                        yield return sceneController.ShowTopText("You need a credit card to pay!", 1);
+                    }
+                }
+            }
+            yield return null;
+        } while (open);
     }
 
-    public void OpenAd()
+    
+
+    // Check the player's inventory for an item
+    bool checkInventory(string item)
     {
-        Debug.Log("Opened ad!");
+        // Debug.Log(inventory);
+        for (int i = 0; i < inventory.Container.Count; i++)
+        {
+            if (inventory.Container[i].item.name == item)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    IEnumerator SpawnRouen()
+    {   
+        // Move the scripted camera over to the player
+        sceneController.MoveObjectToPosition(scriptedCamera.gameObject, fpsController.transform.position);
+        sceneController.RotateObjectToAngle(scriptedCamera.gameObject, fpsController.transform.rotation);
+        // Return to scripted camera
+        adScreen.gameObject.SetActive(false);
+        blackOverlay.gameObject.SetActive(false);
+        scriptedCamera.gameObject.SetActive(true);
+        fpsController.gameObject.SetActive(false);
+        // Now, rotate the scripted camera to wherever Rouen has been spawned
+        // Alternatively, we can leave the player with the fpsController instead
+        // of scripted for a potentially scarier effect.
+        yield return null;
     }
 
     // Eye blink effect

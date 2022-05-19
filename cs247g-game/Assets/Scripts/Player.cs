@@ -66,13 +66,14 @@ public class Player : MonoBehaviour
     {
         if (collision != null) {
             item = collision.GetComponent<Item>();
+            inRange = true;
         }
 
         // Interact with items
         if (inRange && isTV && Input.GetKeyDown(KeyCode.E))
         {
-            scene2.OpenAd();
-            // Debug.Log("Button pressed!");
+            StartCoroutine(scene2.OpenAd());
+            Debug.Log("Button pressed!");
         }
 
         // Collect item
