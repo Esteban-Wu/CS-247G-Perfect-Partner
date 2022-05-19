@@ -8,13 +8,17 @@ public class Player : MonoBehaviour
 {
     public InventoryObject inventory;
     public SceneController sceneController;
+    public Scene2 scene2;
     private bool inRange;
     private Collider collision;
     private Item item;
+    private Outline script;
+    private bool isTV;
     
     void Start()
     {
         inRange = false;
+        isTV = true;
         collision = null;
         item = null;
     }
@@ -25,10 +29,16 @@ public class Player : MonoBehaviour
         inRange = true;
 
         // Highlight item
-        item = other.GetComponent<Item>();
-        if (item)
+        script = other.GetComponent<Outline>();
+        if (script)
         {
             sceneController.HighlightObject(other.gameObject, 8);
+        }
+        
+        if (other.tag == "TV")
+        {
+            isTV = true;
+            // Debug.Log("TV near");
         }
 
     }
@@ -36,12 +46,13 @@ public class Player : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {
         // Dehighlight item
-        item = other.GetComponent<Item>();
-        if (item)
+        script = other.GetComponent<Outline>();
+        if (script)
         {
             sceneController.DehighlightObject(other.gameObject);
         }
 
+        isTV = false;
         collision = null;
         inRange = false;
     }
@@ -55,6 +66,13 @@ public class Player : MonoBehaviour
     {
         if (collision != null) {
             item = collision.GetComponent<Item>();
+        }
+
+        // Interact with items
+        if (inRange && isTV && Input.GetKeyDown(KeyCode.E))
+        {
+            scene2.OpenAd();
+            // Debug.Log("Button pressed!");
         }
 
         // Collect item

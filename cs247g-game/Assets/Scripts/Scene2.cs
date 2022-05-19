@@ -20,6 +20,7 @@ public class Scene2 : MonoBehaviour
     // Scene 2 objects
     public GameObject upperEyelid;
     public GameObject lowerEyelid;
+    private GameObject inventory;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +29,12 @@ public class Scene2 : MonoBehaviour
 
         // Initialize private game objects
         sceneController = sceneControllerObject.GetComponent<SceneController>();
+        inventory = canvas.transform.Find("Inventory Screen").gameObject;
 
         // Initialize state of passed-in objects
         scriptedCamera.gameObject.SetActive(true);
         fpsController.gameObject.SetActive(false);
-        canvas.gameObject.SetActive(false);
+        inventory.gameObject.SetActive(false);
 
         // Start Scene 2
         StartCoroutine(RunScene());
@@ -47,6 +49,7 @@ public class Scene2 : MonoBehaviour
         // Etc. Refer to SceneController.cs for more useful methods :D
 
         yield return WakeUp();
+        
         // Transition to scene 3 by calling: 
         //     1) Variables.currentLevel = 3;
         //     2) SceneManager.LoadScene("NightScene");
@@ -83,9 +86,19 @@ public class Scene2 : MonoBehaviour
         // Return to FPS
         upperEyelid.gameObject.SetActive(false);
         lowerEyelid.gameObject.SetActive(false);
-        canvas.gameObject.SetActive(true);
+        inventory.gameObject.SetActive(true);
         sceneController.EnableFPSController(true);
         yield return null;
+    }
+
+    IEnumerator HandleAdInteraction()
+    {
+        yield return null;
+    }
+
+    public void OpenAd()
+    {
+        Debug.Log("Opened ad!");
     }
 
     // Eye blink effect
