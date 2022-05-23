@@ -96,6 +96,7 @@ public class Scene2 : MonoBehaviour
         lowerEyelid.gameObject.SetActive(false);
         inventoryScreen.gameObject.SetActive(true);
         sceneController.EnableFPSController(true);
+        sceneController.SetHint("Interact with the TV.");
         yield return null;
     }
 
@@ -106,7 +107,8 @@ public class Scene2 : MonoBehaviour
         Debug.Log("Opened ad!");
         blackOverlay.gameObject.SetActive(true);
         adScreen.gameObject.SetActive(true);
-        yield return sceneController.ShowText("Looks like I need to pay with a credit card...");
+        sceneController.SetHint("Find and collect the credit card. It's not in the bedroom.");
+        yield return sceneController.ShowText("Looks like I need to pay with a credit card...", true);
         do
         {
             if (Input.GetMouseButtonDown(0))
@@ -125,6 +127,7 @@ public class Scene2 : MonoBehaviour
                 {
                     if (checkInventory("Credit Card"))
                     {
+                        sceneController.ResetHint();
                         yield return sceneController.ShowTopText("Thank you for your payment! Your order will arrive soon.", 1);
                         yield return sceneController.Wait(1);
                         yield return SpawnRouen();

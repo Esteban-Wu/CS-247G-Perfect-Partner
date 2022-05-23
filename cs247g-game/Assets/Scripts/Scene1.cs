@@ -125,20 +125,21 @@ public class Scene1 : MonoBehaviour
 
         // Wait 2 seconds, then show text
         yield return sceneController.Wait(2);
-        yield return sceneController.ShowText("Where is he...?");
+        yield return sceneController.ShowText("Where is he...?", true);
 
         // Phone glow
         yield return sceneController.FlashObject(phone, 3, 2);
         // TODO: play ~ding~ audio
 
         // Show phone interface once the phone is clicked
-        yield return sceneController.WaitForClick("phone");
+        // yield return sceneController.WaitForClick("phone");
+        yield return sceneController.WaitForKeyPress(KeyCode.E, "Press 'E' to interact");
         phoneInterface.SetActive(true);
         lockedScreen.gameObject.SetActive(true);
         unlockingScreen.gameObject.SetActive(false);
         messageScreen.gameObject.SetActive(false);
         yield return sceneController.Wait(1.5f);
-        yield return sceneController.ShowText("What the f-");
+        yield return sceneController.ShowText("What the f-", true);
 
         // Transition to unlocking screen
         lockedScreen.gameObject.SetActive(false);
@@ -159,9 +160,12 @@ public class Scene1 : MonoBehaviour
         }
         Button backButton = unlockingScreen.transform.Find("Back Button").GetComponent<Button>();
         
+        // Update current hint
+        sceneController.SetHint("Find his passcode on a sticky note in a drawer.");
+
         // Detect button clicks
         yield return ShowDots(guess);
-        yield return sceneController.ShowText("I saw his passcode on a sticky note in a drawer...");
+        yield return sceneController.ShowText("I saw his passcode on a sticky note in a drawer...", false);
         do {
             if(Input.GetMouseButtonDown(0)) {
                 // Get the currently selected button
@@ -186,14 +190,15 @@ public class Scene1 : MonoBehaviour
                 // Back button
                 if (curr != null && curr.name.Equals("Back Button")) {
                     // Switch to FPS controller
+                    sceneController.HideBottomText();
                     phoneInterface.SetActive(false);
                     sceneController.EnableFPSController(true);
 
                     // Show phone interface once the phone is clicked
-                    yield return sceneController.WaitForClick("phone");
+                    yield return sceneController.WaitForPlayerInteract(phone);
                     phoneInterface.SetActive(true);
                     sceneController.EnableFPSController(false);
-                    yield return sceneController.ShowText("I saw his passcode on a sticky note... where is it?");
+                    yield return sceneController.ShowText("I saw his passcode on a sticky note... where is it?", false);
                 }
             }
             yield return null;
@@ -204,11 +209,14 @@ public class Scene1 : MonoBehaviour
     IEnumerator DiscoverInfidelity() 
     {
         // Show cheating messages and wait for player to scroll to the bottom
+        sceneController.HideBottomText();
+        sceneController.SetHint("Scroll through the text messages.");
         unlockingScreen.gameObject.SetActive(false);
         messageScreen.gameObject.SetActive(true);
         yield return WaitForScroll();
-        yield return sceneController.ShowText("Oh my goodness...");
+        yield return sceneController.ShowText("Oh my goodness...", true);
         phoneInterface.gameObject.SetActive(false);
+        sceneController.ResetHint();
 
         // Move camera to edge of bed
         sceneController.MoveObjectToPosition(scriptedCamera.gameObject, new Vector3(-6.6f, 3.9f, 2.1f));

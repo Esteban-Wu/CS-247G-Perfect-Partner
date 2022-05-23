@@ -15,6 +15,7 @@ public class SceneController : MonoBehaviour
 
     // Objects used in multiple story scenes
     private GameObject pausePanel;
+    private GameObject hintPanel;
     private TextMeshProUGUI topText;
     private TextMeshProUGUI bottomText;
     private Image returnIcon;
@@ -30,6 +31,7 @@ public class SceneController : MonoBehaviour
     {
         // Initialize private game objects
         pausePanel = canvas.transform.Find("Pause Panel").gameObject;
+        hintPanel = canvas.transform.Find("Hint").gameObject;
         topText = canvas.transform.Find("Top Text").GetComponent<TextMeshProUGUI>();
         bottomText = canvas.transform.Find("Bottom Text").GetComponent<TextMeshProUGUI>();
         returnIcon = canvas.transform.Find("Return Key").GetComponent<Image>();
@@ -47,6 +49,7 @@ public class SceneController : MonoBehaviour
 
         // Initial state of passed in objects
         pausePanel.gameObject.SetActive(false);
+        hintPanel.gameObject.SetActive(false);
         topText.gameObject.SetActive(false);
         bottomText.gameObject.SetActive(false);
         returnIcon.gameObject.SetActive(false);
@@ -74,7 +77,7 @@ public class SceneController : MonoBehaviour
     }
 
     // Show text on the canvas with a typewriter effect
-    public IEnumerator ShowText(string fullText)
+    public IEnumerator ShowText(string fullText, bool waitForKeyPress)
     {
         // Typewriter effect
         bottomText.gameObject.SetActive(true);
@@ -84,15 +87,18 @@ public class SceneController : MonoBehaviour
             bottomText.text = currentText;
             yield return new WaitForSeconds(0.05f);
         }
-        returnIcon.gameObject.SetActive(true);
 
         // Wait until return is hit
-        while(!Input.GetKeyDown(KeyCode.Return))
+        if (waitForKeyPress)
         {
-            yield return null;
+            returnIcon.gameObject.SetActive(true);
+            while(!Input.GetKeyDown(KeyCode.E))
+            {
+                yield return null; 
+            }
+            returnIcon.gameObject.SetActive(false);
+            bottomText.gameObject.SetActive(false);
         }
-        returnIcon.gameObject.SetActive(false);
-        bottomText.gameObject.SetActive(false);
     }
 
     // Wait for an object to be clicked
@@ -110,6 +116,40 @@ public class SceneController : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    // Wait for the player to interact with an object
+    public IEnumerator WaitForPlayerInteract(GameObject obj)
+    {
+        while(true) {
+            // If object is in range, show message
+            Vector3 playerPos = fpsController.transform.position;
+            Vector3 objectPos = obj.transform.position;
+            float distance = Vector3.Distance(playerPos, objectPos);
+            bool inRange = distance < 1f? true: false;
+            if (inRange) {
+                ShowBottomText("Press 'E' to interact");
+            } else {
+                HideBottomText();
+            }
+
+            // If 'E' key is pressed when in range, break
+            if(inRange && Input.GetKeyDown(KeyCode.E)) {
+                break;
+            }
+            yield return null;
+        }
+    }
+
+    // Wait for the 'E' key to be pressed
+    public IEnumerator WaitForKeyPress(KeyCode keyCode, string message)
+    {
+        ShowBottomText(message);
+        while(!Input.GetKeyDown(keyCode))
+        {
+            yield return null;
+        }
+        HideBottomText();
     }
 
     // Flash an object x times, assuming it has the Outline.cs script attached
@@ -235,6 +275,17 @@ public class SceneController : MonoBehaviour
         topText.gameObject.SetActive(false);
     }
 
+    // Show str as bottom text
+    public void ShowBottomText(string str) {
+        bottomText.text = str;
+        bottomText.gameObject.SetActive(true);
+    }
+
+    // Hide bottom text
+    public void HideBottomText() {
+        bottomText.gameObject.SetActive(false);
+    }
+
     // Hide black overlay
     public void HideBlackOverlay() {
         blackOverlay.gameObject.SetActive(false);
@@ -246,6 +297,25 @@ public class SceneController : MonoBehaviour
         pausePanel.gameObject.SetActive(visible);
     }
 
+    // Show/hide the hint panel
+    public void ShowHintPanel(bool visible)
+    {
+        Debug.Log("Hello: " + visible);
+        hintPanel.gameObject.SetActive(visible);
+    }
+
+    // Set hint
+    public void SetHint(string hint)
+    {
+        Variables.currentHint = hint;
+    }
+
+    // Reset hint
+    public void ResetHint()
+    {
+        Variables.currentHint = "Currently not available.";
+    }
+
     // Save game
     void SaveGame() 
     {
@@ -255,7 +325,15 @@ public class SceneController : MonoBehaviour
     // View hint
     void Hint()
     {
-        Debug.Log("Hint clicked");
+        ShowHintPanel(true);
+    
+        // Set hint text
+        TextMeshProUGUI hintText = hintPanel.transform.Find("HintMessage").GetComponent<TextMeshProUGUI>();
+        hintText.text = Variables.currentHint;
+
+        // Close hint panel
+        Button hintClose = hintPanel.transform.Find("HintClose").GetComponent<Button>();
+        hintClose.onClick.AddListener(() => ShowHintPanel(false));
     }
 
     // Return to main menu

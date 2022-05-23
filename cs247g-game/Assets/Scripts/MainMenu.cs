@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     private Button bResumeGame;
     private Button bAbout;
     private Button bSettings;
+    private Button bQuit;
 
     private Button bCloseAbout;
     private Button bCloseSettings;
@@ -29,6 +30,7 @@ public class MainMenu : MonoBehaviour
         bResumeGame = GameObject.Find("ButtonResumeGame").GetComponent<Button>();
         bAbout = GameObject.Find("ButtonAbout").GetComponent<Button>();
         bSettings = GameObject.Find("ButtonSettings").GetComponent<Button>();
+        bQuit = GameObject.Find("ButtonQuit").GetComponent<Button>();
         bCloseAbout = GameObject.Find("ButtonCloseAbout").GetComponent<Button>();
         bCloseSettings = GameObject.Find("ButtonCloseSettings").GetComponent<Button>();
 
@@ -45,6 +47,7 @@ public class MainMenu : MonoBehaviour
         bResumeGame.onClick.AddListener(() => ResumeGame());
         bAbout.onClick.AddListener(() => About());
         bSettings.onClick.AddListener(() => Settings());
+        bQuit.onClick.AddListener(() => Quit());
         bCloseAbout.onClick.AddListener(() => ShowAboutPanel(false));
         bCloseSettings.onClick.AddListener(() => ShowSettingsPanel(false));
 
@@ -90,6 +93,13 @@ public class MainMenu : MonoBehaviour
     void About() 
     {
         ShowAboutPanel(true);
+    }
+
+    // Quit the application
+    void Quit() 
+    {
+        Application.Quit();
+        Debug.Log("The Application.Quit call is ignored in the Editor");
     }
 
     // Change music volume
