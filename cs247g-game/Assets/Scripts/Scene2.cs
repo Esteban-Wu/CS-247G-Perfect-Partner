@@ -108,7 +108,7 @@ public class Scene2 : MonoBehaviour
         blackOverlay.gameObject.SetActive(true);
         adScreen.gameObject.SetActive(true);
         sceneController.SetHint("Find and collect the credit card. It's not in the bedroom.");
-        yield return sceneController.ShowText("Looks like I need to pay with a credit card...", true);
+        yield return sceneController.ShowText("Looks like I need to pay with a credit card...", true, 0);
         do
         {
             if (Input.GetMouseButtonDown(0))

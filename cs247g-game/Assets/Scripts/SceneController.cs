@@ -77,8 +77,19 @@ public class SceneController : MonoBehaviour
     }
 
     // Show text on the canvas with a typewriter effect
-    public IEnumerator ShowText(string fullText, bool waitForKeyPress)
+    // Character: 0 = player, 1 = rouen
+    public IEnumerator ShowText(string fullText, bool waitForKeyPress, int character)
     {
+        // Set color of text
+        switch(character) {
+            case 0: // player - white
+                bottomText.color = new Color(1, 1, 1, 0.8f);
+                break;
+            case 1: // rouen - red
+                bottomText.color = new Color(0.5f, 0, 0, 1);
+                break;
+        }
+
         // Typewriter effect
         bottomText.gameObject.SetActive(true);
         for (int i = 0; i < fullText.Length + 1; i++)
@@ -119,14 +130,14 @@ public class SceneController : MonoBehaviour
     }
 
     // Wait for the player to interact with an object
-    public IEnumerator WaitForPlayerInteract(GameObject obj)
+    public IEnumerator WaitForPlayerInteract(GameObject obj, float range)
     {
         while(true) {
             // If object is in range, show message
             Vector3 playerPos = fpsController.transform.position;
             Vector3 objectPos = obj.transform.position;
             float distance = Vector3.Distance(playerPos, objectPos);
-            bool inRange = distance < 1f? true: false;
+            bool inRange = distance < range? true: false;
             if (inRange) {
                 ShowBottomText("Press 'E' to interact");
             } else {
@@ -137,6 +148,18 @@ public class SceneController : MonoBehaviour
             if(inRange && Input.GetKeyDown(KeyCode.E)) {
                 break;
             }
+            yield return null;
+        }
+    }
+
+    // Wait for the player to get near an object
+    public IEnumerator WaitForPlayerToGetNear(GameObject obj, float range)
+    {
+        while(true) {
+            Vector3 playerPos = fpsController.transform.position;
+            Vector3 objectPos = obj.transform.position;
+            float distance = Vector3.Distance(playerPos, objectPos);
+            if (distance < range) break;
             yield return null;
         }
     }
@@ -217,6 +240,13 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    // Show or hide the black overlay
+    public void ShowBlackOverlay(bool visible) 
+    {
+        blackOverlay.color = new Color(0, 0, 0, 1);
+        blackOverlay.gameObject.SetActive(visible);
+    }
+
     // Fade to black/transparent
     public IEnumerator Fade(bool black, float speed)
     {
@@ -284,11 +314,6 @@ public class SceneController : MonoBehaviour
     // Hide bottom text
     public void HideBottomText() {
         bottomText.gameObject.SetActive(false);
-    }
-
-    // Hide black overlay
-    public void HideBlackOverlay() {
-        blackOverlay.gameObject.SetActive(false);
     }
 
     // Show/hide the pause panel

@@ -111,7 +111,7 @@ public class Scene1 : MonoBehaviour
         // Prepare for blink
         upperEyelid.gameObject.SetActive(true);
         lowerEyelid.gameObject.SetActive(true);
-        sceneController.HideBlackOverlay();
+        sceneController.ShowBlackOverlay(false);
 
         // Wait 1 second, then blink 3 times
         yield return sceneController.Wait(1);
@@ -125,7 +125,7 @@ public class Scene1 : MonoBehaviour
 
         // Wait 2 seconds, then show text
         yield return sceneController.Wait(2);
-        yield return sceneController.ShowText("Where is he...?", true);
+        yield return sceneController.ShowText("Where is he...?", true, 0);
 
         // Phone glow
         yield return sceneController.FlashObject(phone, 3, 2);
@@ -139,7 +139,7 @@ public class Scene1 : MonoBehaviour
         unlockingScreen.gameObject.SetActive(false);
         messageScreen.gameObject.SetActive(false);
         yield return sceneController.Wait(1.5f);
-        yield return sceneController.ShowText("What the f-", true);
+        yield return sceneController.ShowText("What the f-", true, 0);
 
         // Transition to unlocking screen
         lockedScreen.gameObject.SetActive(false);
@@ -165,7 +165,7 @@ public class Scene1 : MonoBehaviour
 
         // Detect button clicks
         yield return ShowDots(guess);
-        yield return sceneController.ShowText("I saw his passcode on a sticky note in a drawer...", false);
+        yield return sceneController.ShowText("I saw his passcode on a sticky note in a drawer...", false, 0);
         do {
             if(Input.GetMouseButtonDown(0)) {
                 // Get the currently selected button
@@ -195,10 +195,10 @@ public class Scene1 : MonoBehaviour
                     sceneController.EnableFPSController(true);
 
                     // Show phone interface once the phone is clicked
-                    yield return sceneController.WaitForPlayerInteract(phone);
+                    yield return sceneController.WaitForPlayerInteract(phone, 1f);
                     phoneInterface.SetActive(true);
                     sceneController.EnableFPSController(false);
-                    yield return sceneController.ShowText("I saw his passcode on a sticky note... where is it?", false);
+                    yield return sceneController.ShowText("I saw his passcode on a sticky note... where is it?", false, 0);
                 }
             }
             yield return null;
@@ -214,7 +214,7 @@ public class Scene1 : MonoBehaviour
         unlockingScreen.gameObject.SetActive(false);
         messageScreen.gameObject.SetActive(true);
         yield return WaitForScroll();
-        yield return sceneController.ShowText("Oh my goodness...", true);
+        yield return sceneController.ShowText("Oh my goodness...", true, 0);
         phoneInterface.gameObject.SetActive(false);
         sceneController.ResetHint();
 

@@ -386,7 +386,7 @@ public class DoorScript : MonoBehaviour {
 	}
 	#endregion
 	
-	void OpenDoor()
+	public void OpenDoor()
 	{
 		doorAnimation.Play(AnimationNames.OpeningAnim);
 		doorAnimation[AnimationNames.OpeningAnim].speed = controls.openingSpeed;
