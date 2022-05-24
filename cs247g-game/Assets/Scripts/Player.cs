@@ -77,12 +77,12 @@ public class Player : MonoBehaviour
         }
 
         // Collect item
-        if (inRange && item && Input.GetKeyDown(KeyCode.E))
-        {
-            inventory.AddItem(item.item, 1);
-            Destroy(collision.gameObject);
-            collision = null;
-            inRange = false;
-        }
+        //if (inRange && item && Input.GetKeyDown(KeyCode.E))
+        //{
+            //inventory.AddItem(item.item, 1);
+            //Destroy(collision.gameObject);
+            //collision = null;
+            //inRange = false;
+        //}
     }
 }

@@ -91,9 +91,12 @@ public class SceneController : MonoBehaviour
         }
 
         // Typewriter effect
+        Debug.Log("Setting active");
         bottomText.gameObject.SetActive(true);
+        Debug.Log("Set active.");
         for (int i = 0; i < fullText.Length + 1; i++)
         {
+            // bottomText.gameObject.SetActive(true);
             string currentText = fullText.Substring(0, i);
             bottomText.text = currentText;
             yield return new WaitForSeconds(0.05f);
@@ -278,8 +281,8 @@ public class SceneController : MonoBehaviour
     // Enable/disable the FPS controller
     public void EnableFPSController(bool state) {
         if (state) {
-            scriptedCamera.gameObject.SetActive(false);
             fpsController.gameObject.SetActive(true);
+            scriptedCamera.gameObject.SetActive(false);
         } else {
             scriptedCamera.gameObject.SetActive(true);
             fpsController.gameObject.SetActive(false);

@@ -22,8 +22,11 @@ public class Scene2 : MonoBehaviour
     public GameObject upperEyelid;
     public GameObject lowerEyelid;
     public GameObject blackOverlay;
+    public GameObject creditCard;
+    private Item item;
     private GameObject inventoryScreen;
     private GameObject adScreen;
+    private Player playerScript;
     // private bool adSolved;
 
     // Start is called before the first frame update
@@ -33,6 +36,7 @@ public class Scene2 : MonoBehaviour
 
         // Initialize private game objects
         sceneController = sceneControllerObject.GetComponent<SceneController>();
+        playerScript = fpsController.GetComponent<Player>();
         inventoryScreen = canvas.transform.Find("Inventory Screen").gameObject;
         blackOverlay = canvas.transform.Find("Black Overlay").gameObject;
         adScreen = canvas.transform.Find("Ad").gameObject;
@@ -57,6 +61,7 @@ public class Scene2 : MonoBehaviour
         // Etc. Refer to SceneController.cs for more useful methods :D
 
         yield return WakeUp();
+        yield return CreditCard();
         
         // Transition to scene 3 by calling: 
         //     1) Variables.currentLevel = 3;
@@ -100,15 +105,26 @@ public class Scene2 : MonoBehaviour
         yield return null;
     }
 
+    public IEnumerator CreditCard()
+    {
+        item = creditCard.GetComponent<Item>();
+        yield return sceneController.WaitForPlayerInteract(creditCard, 1);
+        // sceneController.HideBottomText();
+        inventory.AddItem(item.item, 1);
+        Destroy(creditCard.gameObject);
+    }
+
     public IEnumerator OpenAd()
     {
         bool open = true;
-
-        Debug.Log("Opened ad!");
+        // sceneController.EnableFPSController(false);
+        playerScript.enabled = false;
+        sceneController.HideBottomText();
         blackOverlay.gameObject.SetActive(true);
         adScreen.gameObject.SetActive(true);
         sceneController.SetHint("Find and collect the credit card. It's not in the bedroom.");
-        yield return sceneController.ShowText("Looks like I need to pay with a credit card...", true, 0);
+        StartCoroutine(sceneController.ShowText("Looks like I need to pay with a credit card...", false, 0));
+        Debug.Log("Text shown");
         do
         {
             if (Input.GetMouseButtonDown(0))
@@ -118,8 +134,11 @@ public class Scene2 : MonoBehaviour
                 // Back button, close ad
                 if (curr != null && curr.name.Equals("Back Button"))
                 {
+                    // sceneController.EnableFPSController(true);
                     adScreen.gameObject.SetActive(false);
                     blackOverlay.gameObject.SetActive(false);
+                    playerScript.enabled = true;
+                    sceneController.HideBottomText();
                     open = false;
                     Debug.Log("Closing ad!");
                 }
@@ -135,7 +154,7 @@ public class Scene2 : MonoBehaviour
                     }
                     else
                     {
-                        yield return sceneController.ShowTopText("You need a credit card to pay!", 1);
+                        StartCoroutine(sceneController.ShowTopText("You need a credit card to pay!", 1));
                     }
                 }
             }
@@ -163,16 +182,19 @@ public class Scene2 : MonoBehaviour
     {   
         // Move the scripted camera over to the player
         sceneController.MoveObjectToPosition(scriptedCamera.gameObject, fpsController.transform.position);
-        sceneController.RotateObjectToAngle(scriptedCamera.gameObject, fpsController.transform.rotation);
         // Return to scripted camera
         adScreen.gameObject.SetActive(false);
         blackOverlay.gameObject.SetActive(false);
-        scriptedCamera.gameObject.SetActive(true);
-        fpsController.gameObject.SetActive(false);
-        // Now, rotate the scripted camera to wherever Rouen has been spawned
+        sceneController.RotateObjectToAngle(scriptedCamera.gameObject, Quaternion.Euler(0f, 0f, 0f));
+        sceneController.EnableFPSController(false);
         // Alternatively, we can leave the player with the fpsController instead
         // of scripted for a potentially scarier effect.
         yield return null;
+    }
+
+    private void OnApplicationQuit()
+    {
+        inventory.Container.Clear();
     }
 
     // Eye blink effect
