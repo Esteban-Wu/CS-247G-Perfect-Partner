@@ -102,7 +102,7 @@ public class SceneController : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        // Wait until return is hit
+        // Wait until E is hit
         if (waitForKeyPress)
         {
             returnIcon.gameObject.SetActive(true);

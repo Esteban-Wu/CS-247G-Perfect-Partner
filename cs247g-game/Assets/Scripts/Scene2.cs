@@ -27,6 +27,7 @@ public class Scene2 : MonoBehaviour
     private GameObject inventoryScreen;
     private GameObject adScreen;
     private Player playerScript;
+    private Coroutine creditCoroutine;
     // private bool adSolved;
 
     // Start is called before the first frame update
@@ -61,7 +62,7 @@ public class Scene2 : MonoBehaviour
         // Etc. Refer to SceneController.cs for more useful methods :D
 
         yield return WakeUp();
-        yield return CreditCard();
+        creditCoroutine = StartCoroutine(CreditCard());
         
         // Transition to scene 3 by calling: 
         //     1) Variables.currentLevel = 3;
@@ -109,7 +110,7 @@ public class Scene2 : MonoBehaviour
     {
         item = creditCard.GetComponent<Item>();
         yield return sceneController.WaitForPlayerInteract(creditCard, 1);
-        // sceneController.HideBottomText();
+        sceneController.HideBottomText();
         inventory.AddItem(item.item, 1);
         Destroy(creditCard.gameObject);
     }
@@ -117,7 +118,7 @@ public class Scene2 : MonoBehaviour
     public IEnumerator OpenAd()
     {
         bool open = true;
-        // sceneController.EnableFPSController(false);
+        StopCoroutine(creditCoroutine);
         playerScript.enabled = false;
         sceneController.HideBottomText();
         blackOverlay.gameObject.SetActive(true);
@@ -134,7 +135,7 @@ public class Scene2 : MonoBehaviour
                 // Back button, close ad
                 if (curr != null && curr.name.Equals("Back Button"))
                 {
-                    // sceneController.EnableFPSController(true);
+                    creditCoroutine = StartCoroutine(CreditCard());
                     adScreen.gameObject.SetActive(false);
                     blackOverlay.gameObject.SetActive(false);
                     playerScript.enabled = true;
@@ -182,10 +183,11 @@ public class Scene2 : MonoBehaviour
     {   
         // Move the scripted camera over to the player
         sceneController.MoveObjectToPosition(scriptedCamera.gameObject, fpsController.transform.position);
+        sceneController.RotateObjectToAngle(scriptedCamera.gameObject, Quaternion.Euler(0f, -90f, 0f));
         // Return to scripted camera
         adScreen.gameObject.SetActive(false);
         blackOverlay.gameObject.SetActive(false);
-        sceneController.RotateObjectToAngle(scriptedCamera.gameObject, Quaternion.Euler(0f, 0f, 0f));
+        sceneController.HideBottomText();
         sceneController.EnableFPSController(false);
         // Alternatively, we can leave the player with the fpsController instead
         // of scripted for a potentially scarier effect.
