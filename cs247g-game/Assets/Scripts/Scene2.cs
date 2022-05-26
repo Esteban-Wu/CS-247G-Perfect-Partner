@@ -23,6 +23,7 @@ public class Scene2 : MonoBehaviour
     public GameObject lowerEyelid;
     public GameObject blackOverlay;
     public GameObject creditCard;
+    public GameObject rouen;
     private Item item;
     private GameObject inventoryScreen;
     private GameObject adScreen;
@@ -113,6 +114,7 @@ public class Scene2 : MonoBehaviour
         sceneController.HideBottomText();
         inventory.AddItem(item.item, 1);
         Destroy(creditCard.gameObject);
+        yield return null;
     }
 
     public IEnumerator OpenAd()
@@ -150,7 +152,7 @@ public class Scene2 : MonoBehaviour
                         sceneController.ResetHint();
                         yield return sceneController.ShowTopText("Thank you for your payment! Your order will arrive soon.", 1);
                         yield return sceneController.Wait(1);
-                        yield return SpawnRouen();
+                        StartCoroutine(SpawnRouen());
                         break;
                     }
                     else
@@ -180,17 +182,40 @@ public class Scene2 : MonoBehaviour
     }
 
     IEnumerator SpawnRouen()
-    {   
+    {
         // Move the scripted camera over to the player
-        sceneController.MoveObjectToPosition(scriptedCamera.gameObject, fpsController.transform.position);
+        sceneController.MoveObjectToPosition(scriptedCamera.gameObject, fpsController.transform.position + new Vector3(0, 0.75f, 0f));
         sceneController.RotateObjectToAngle(scriptedCamera.gameObject, Quaternion.Euler(0f, -90f, 0f));
+        // Position Rouen
+        sceneController.MoveObjectToPosition(rouen.gameObject, fpsController.transform.position + new Vector3(-0.5f, -0.83f, 0f));
+        sceneController.RotateObjectToAngle(rouen.gameObject, Quaternion.Euler(0f, 90f, 0f));
+        rouen.gameObject.SetActive(true);
         // Return to scripted camera
         adScreen.gameObject.SetActive(false);
         blackOverlay.gameObject.SetActive(false);
         sceneController.HideBottomText();
         sceneController.EnableFPSController(false);
-        // Alternatively, we can leave the player with the fpsController instead
-        // of scripted for a potentially scarier effect.
+        yield return sceneController.Wait(0.4f);
+        yield return sceneController.ShowText("Hello there.", false, 1);
+        yield return sceneController.Wait(0.7f);
+        // Faint (from scene 1)
+        // Screen fizzles while fading to black
+        StartCoroutine(sceneController.Fade(true, 0.3f));
+        int shakeTimes = 10;
+        float shakeAmount = 0.03f;
+        Vector3 originalPos = scriptedCamera.transform.localPosition;
+        while (shakeTimes > 0)
+        {
+            scriptedCamera.transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            shakeTimes -= 1;
+            yield return sceneController.Wait(0.1f);
+        }
+        scriptedCamera.transform.localPosition = originalPos;
+        yield return sceneController.Wait(2.5f);
+        sceneController.HideBottomText();
+        // Transition to Scene 3
+        Variables.currentLevel = 3;
+        SceneManager.LoadScene("NightScene");
         yield return null;
     }
 

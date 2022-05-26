@@ -7699,6 +7699,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10a1d0b1898758146ba968a571deb062, type: 3}
+--- !u!1 &372224128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1377134139953420, guid: ad6d43616d2416b44be38305e5f7c946,
+    type: 3}
+  m_PrefabInstance: {fileID: 1995264506}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &372318084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 430380, guid: e8076bbce97d4e742871ab27676522ee,
@@ -33818,6 +33824,7 @@ MonoBehaviour:
   lowerEyelid: {fileID: 1370475297}
   blackOverlay: {fileID: 222303535}
   creditCard: {fileID: 1174566471}
+  rouen: {fileID: 372224128}
 --- !u!1 &1482949706
 GameObject:
   m_ObjectHideFlags: 0
