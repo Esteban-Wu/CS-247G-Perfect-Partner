@@ -198,7 +198,7 @@ public class Scene1 : MonoBehaviour
                     yield return sceneController.WaitForPlayerInteract(phone, 1f);
                     phoneInterface.SetActive(true);
                     sceneController.EnableFPSController(false);
-                    yield return sceneController.ShowText("I saw his passcode on a sticky note... where is it?", false, 0);
+                    yield return sceneController.ShowText("I saw his passcode on a sticky note in a drawer...", false, 0);
                 }
             }
             yield return null;

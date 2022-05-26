@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Variables : MonoBehaviour
 {
-    public static int currentLevel = 3;
+    public static int currentLevel = 1;
     public static string playerName = "Player Name";
     public static string currentHint = "Currently not available.";
 

@@ -91,9 +91,7 @@ public class SceneController : MonoBehaviour
         }
 
         // Typewriter effect
-        Debug.Log("Setting active");
         bottomText.gameObject.SetActive(true);
-        Debug.Log("Set active.");
         for (int i = 0; i < fullText.Length + 1; i++)
         {
             // bottomText.gameObject.SetActive(true);
@@ -135,6 +133,7 @@ public class SceneController : MonoBehaviour
     // Wait for the player to interact with an object
     public IEnumerator WaitForPlayerInteract(GameObject obj, float range)
     {
+        bottomText.color = new Color(1, 1, 1, 0.8f);
         while(true) {
             // If object is in range, show message
             Vector3 playerPos = fpsController.transform.position;
@@ -328,7 +327,6 @@ public class SceneController : MonoBehaviour
     // Show/hide the hint panel
     public void ShowHintPanel(bool visible)
     {
-        Debug.Log("Hello: " + visible);
         hintPanel.gameObject.SetActive(visible);
     }
 
