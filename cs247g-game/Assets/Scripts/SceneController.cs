@@ -16,6 +16,7 @@ public class SceneController : MonoBehaviour
     // Objects used in multiple story scenes
     private GameObject pausePanel;
     private GameObject hintPanel;
+    private GameObject tutorialPanel;
     private TextMeshProUGUI topText;
     private TextMeshProUGUI bottomText;
     private Image returnIcon;
@@ -32,6 +33,7 @@ public class SceneController : MonoBehaviour
         // Initialize private game objects
         pausePanel = canvas.transform.Find("Pause Panel").gameObject;
         hintPanel = canvas.transform.Find("Hint").gameObject;
+        tutorialPanel = canvas.transform.Find("Tutorial").gameObject;
         topText = canvas.transform.Find("Top Text").GetComponent<TextMeshProUGUI>();
         bottomText = canvas.transform.Find("Bottom Text").GetComponent<TextMeshProUGUI>();
         returnIcon = canvas.transform.Find("Return Key").GetComponent<Image>();
@@ -41,15 +43,18 @@ public class SceneController : MonoBehaviour
         Button bResumeGame = pausePanel.transform.Find("ButtonResumeGame").GetComponent<Button>();
         Button bSaveGame = pausePanel.transform.Find("ButtonSaveGame").GetComponent<Button>();
         Button bHint = pausePanel.transform.Find("ButtonHint").GetComponent<Button>();
+        Button bTutorial = pausePanel.transform.Find("ButtonTutorial").GetComponent<Button>();
         Button bMainMenu = pausePanel.transform.Find("ButtonMainMenu").GetComponent<Button>();
         bResumeGame.onClick.AddListener(() => ShowPausePanel(false));
         bSaveGame.onClick.AddListener(() => SaveGame());
         bHint.onClick.AddListener(() => Hint());
+        bTutorial.onClick.AddListener(() => Tutorial());
         bMainMenu.onClick.AddListener(() => MainMenu());
 
         // Initial state of passed in objects
         pausePanel.gameObject.SetActive(false);
         hintPanel.gameObject.SetActive(false);
+        tutorialPanel.gameObject.SetActive(false);
         topText.gameObject.SetActive(false);
         bottomText.gameObject.SetActive(false);
         returnIcon.gameObject.SetActive(false);
@@ -330,6 +335,12 @@ public class SceneController : MonoBehaviour
         hintPanel.gameObject.SetActive(visible);
     }
 
+    // Show/hide the tutorial panel
+    public void ShowTutorialPanel(bool visible)
+    {
+        tutorialPanel.gameObject.SetActive(visible);
+    }
+
     // Set hint
     public void SetHint(string hint)
     {
@@ -360,6 +371,16 @@ public class SceneController : MonoBehaviour
         // Close hint panel
         Button hintClose = hintPanel.transform.Find("HintClose").GetComponent<Button>();
         hintClose.onClick.AddListener(() => ShowHintPanel(false));
+    }
+
+    // View tutorial
+    void Tutorial()
+    {
+        ShowTutorialPanel(true);
+
+        // Close tutorial panel
+        Button tutorialClose = tutorialPanel.transform.Find("TutorialClose").GetComponent<Button>();
+        tutorialClose.onClick.AddListener(() => ShowTutorialPanel(false));
     }
 
     // Return to main menu

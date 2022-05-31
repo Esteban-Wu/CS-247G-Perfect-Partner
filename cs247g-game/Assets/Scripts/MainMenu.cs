@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
     private GameObject pAbout;
     private GameObject pSettings;
+    private GameObject pTutorial;
 
     private Slider sMusic;
     private Slider sSound;
@@ -39,6 +40,7 @@ public class MainMenu : MonoBehaviour
         // Find the panels in the scene
         pAbout = GameObject.Find("PanelAbout");
         pSettings = GameObject.Find("PanelSettings");
+        pTutorial = GameObject.Find("PanelTutorial");
 
         // Find the sliders in the scene
         sMusic = GameObject.Find("SliderMusic").GetComponent<Slider>();
@@ -64,11 +66,20 @@ public class MainMenu : MonoBehaviour
         // Set visibility
         ShowAboutPanel(false);
         ShowSettingsPanel(false);
+        ShowTutorialPanel(false);
     }
 
     // Start a new game
     void NewGame() 
     {
+        StartCoroutine(EnterTutorial());
+    }
+
+    // Enters the tutorial
+    IEnumerator EnterTutorial()
+    {
+        ShowTutorialPanel(true);
+        yield return new WaitForSeconds(5);
         SceneManager.LoadScene("NightScene");
     }
 
@@ -133,5 +144,11 @@ public class MainMenu : MonoBehaviour
     void ShowSettingsPanel(bool visible) 
     {
         pSettings.gameObject.SetActive(visible);
+    }
+
+    // Helper function
+    void ShowTutorialPanel(bool visible) 
+    {
+        pTutorial.gameObject.SetActive(visible);
     }
 }
