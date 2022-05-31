@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    AudioSource music;
+
     private Button bNewGame;
     private Button bResumeGame;
     private Button bAbout;
@@ -42,6 +44,9 @@ public class MainMenu : MonoBehaviour
         sMusic = GameObject.Find("SliderMusic").GetComponent<Slider>();
         sSound = GameObject.Find("SliderSound").GetComponent<Slider>();
 
+        // Find the audio source
+        music = GetComponent<AudioSource>();
+
         // Add click listeners to the buttons
         bNewGame.onClick.AddListener(() => NewGame());
         bResumeGame.onClick.AddListener(() => ResumeGame());
@@ -53,6 +58,7 @@ public class MainMenu : MonoBehaviour
 
         // Add change listeners to the sliders
         sMusic.onValueChanged.AddListener(delegate { MusicSliderChanged(); });
+        sMusic.value = 1f;
         sSound.onValueChanged.AddListener(delegate { SoundSliderChanged(); });
 
         // Set visibility
@@ -105,14 +111,16 @@ public class MainMenu : MonoBehaviour
     // Change music volume
     void MusicSliderChanged()
     {
-        Debug.Log("Music slider changed: " + sMusic.value * 2f);
+        Debug.Log("Music slider changed: " + sMusic.value);
+        music.volume = sMusic.value;
+        Debug.Log("music volume: " + music.volume);
+        
     }
 
     // Change sound effects volume
     void SoundSliderChanged()
     {
         Debug.Log("Sound slider changed: " + sSound.value * 2f);
-        AudioListener.volume = sSound.value * 2f;
     }
 
     // Helper function
